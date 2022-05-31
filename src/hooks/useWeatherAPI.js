@@ -1,17 +1,13 @@
 import { useEffect, useState, useCallback } from "react";
 
-//WDSD,TEMP from 局屬氣象站資料(現在天氣觀測報告)-本局局屬有人氣象站資料
-
 const fetchCurrentWeather = ({ authorizationKey, locationName }) => {
   return fetch(
-    `https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0003-001?Authorization=${authorizationKey}&locationName=${locationName}`
+    `https://opendata.cwb.gov.tw/api/v1/rest/datastore/C-B0074-001?Authorization=${authorizationKey}}&locationName=${locationName}`
   )
     .then((response) => response.json())
     .then((data) => {
-      // STEP 1：定義 `locationData` 把回傳的資料中會用到的部分取出來
       const locationData = data.records.location[0];
 
-      // STEP 2：將風速（WDSD）和氣溫（TEMP）的資料取出
       const weatherElements = locationData.weatherElement.reduce(
         (neededElements, item) => {
           if (["WDSD", "TEMP"].includes(item.elementName)) {
@@ -22,7 +18,6 @@ const fetchCurrentWeather = ({ authorizationKey, locationName }) => {
         {}
       );
 
-      // STEP 3：要使用到 React 組件中的資料
       return {
         observationTime: locationData.time.obsTime,
         locationName: locationData.locationName,
@@ -32,7 +27,7 @@ const fetchCurrentWeather = ({ authorizationKey, locationName }) => {
       };
     });
 };
-//Wx,PoP,CI from 一般天氣預報-今明 36 小時天氣預報
+
 const fetchWeatherForecast = ({ authorizationKey, cityName }) => {
   return fetch(
     `https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=${authorizationKey}&locationName=${cityName}`
