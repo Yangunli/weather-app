@@ -1,5 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 
+//WDSD,TEMP from 局屬氣象站資料(現在天氣觀測報告)-本局局屬有人氣象站資料
+
 const fetchCurrentWeather = ({ authorizationKey, locationName }) => {
   return fetch(
     `https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0003-001?Authorization=${authorizationKey}&locationName=${locationName}`
@@ -30,7 +32,7 @@ const fetchCurrentWeather = ({ authorizationKey, locationName }) => {
       };
     });
 };
-
+//Wx,PoP,CI from 一般天氣預報-今明 36 小時天氣預報
 const fetchWeatherForecast = ({ authorizationKey, cityName }) => {
   return fetch(
     `https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=${authorizationKey}&locationName=${cityName}`
